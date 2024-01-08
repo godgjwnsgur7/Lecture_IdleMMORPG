@@ -38,7 +38,7 @@ MonoBehaviour:
     m_Id: 
   m_RemoteCatalogLoadPath:
     m_Id: 
-  m_ContentStateBuildPathProfileVariableName: 
+  m_ContentStateBuildPathProfileVariableName: <default settings path>
   m_CustomContentStateBuildPath: 
   m_ContentStateBuildPath: 
   m_BuildAddressablesWithPlayerBuild: 0
@@ -46,6 +46,9 @@ MonoBehaviour:
   m_GroupAssets:
   - {fileID: 11400000, guid: cfbc82e13ed0a214a824dd9cbdf969ab, type: 2}
   - {fileID: 11400000, guid: e6da73de49e83284886f5714d81c3888, type: 2}
+  - {fileID: 11400000, guid: ec289b350d2233f499f3a3990a263df3, type: 2}
+  - {fileID: 11400000, guid: 252a1ce6bae63e945a5e9a3bf8a931dc, type: 2}
+  - {fileID: 11400000, guid: 27e0a8266462446469c1be7eb1fa00e7, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -63,6 +66,20 @@ MonoBehaviour:
         m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
       - m_Id: 5a29ba5385b8947448643b2d7eea38cf
         m_Value: '{UnityEngine.AddressableAssets.Addressables.RuntimePath}/[BuildTarget]'
+      - m_Id: 0654e8cfce44cc8409352f884956c99e
+        m_Value: ServerData/[BuildTarget]
+      - m_Id: a12c46971170cbe4d918a69b68d7d9f7
+        m_Value: http://[PrivateIpAddress]:[HostingServicePort]
+    - m_InheritedParent: 
+      m_Id: cdddc47f960c3404497a9e90840b8ee7
+      m_ProfileName: TestProfile
+      m_Values:
+      - m_Id: 9b3353d4e3ecacf419ef8c78a0ec5088
+        m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
+      - m_Id: 5eb89447f01d21d4aba85e64fd60a2a5
+        m_Value: ServerData/[BuildTarget]
+      - m_Id: 5a29ba5385b8947448643b2d7eea38cf
+        m_Value: ServerData/[BuildTarget]
       - m_Id: 0654e8cfce44cc8409352f884956c99e
         m_Value: ServerData/[BuildTarget]
       - m_Id: a12c46971170cbe4d918a69b68d7d9f7
@@ -87,6 +104,7 @@ MonoBehaviour:
   m_LabelTable:
     m_LabelNames:
     - default
+    - PreLoad
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 2f1e5a7b384844a49a148736d1ce4304, type: 2}
@@ -100,7 +118,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 82815d222290d69468f4843b1609d0ec, type: 2}
   - {fileID: 11400000, guid: 250d112f6e9769f42a15c2e2a271d983, type: 2}
   - {fileID: 11400000, guid: f0c506fd4394cc643afc1d3bffc64fff, type: 2}
-  m_ActiveProfileId: 39ee15cb07790a84a9633a6b1984c9d3
+  m_ActiveProfileId: cdddc47f960c3404497a9e90840b8ee7
   m_HostingServicesManager:
     m_HostingServiceInfos: []
     m_Settings: {fileID: 11400000}

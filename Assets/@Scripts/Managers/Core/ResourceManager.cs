@@ -29,6 +29,8 @@ public class ResourceManager
             return null;
         }
 
+        // Addressables.Instantiate 으로 사용하면 해제도 어드레서블 클래스로 해제해주어야 함
+
         if (pooling)
             return Managers.Pool.Pop(prefab);
 
@@ -83,6 +85,8 @@ public class ResourceManager
 
             foreach (var result in op.Result)
             {
+                // 스프라이트만 따로 처리하는 이유
+                // -> 일반적인 스프라이트는 이름 그대로 받으면 텍스쳐2D로 받아오는 경우가 있어 이름을 따로 세팅
                 if (result.PrimaryKey.Contains(".sprite"))
                 {
                     LoadAsync<Sprite>(result.PrimaryKey, (obj) =>
