@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using UnityEngine;
 
 public class Managers : MonoBehaviour
@@ -8,7 +9,9 @@ public class Managers : MonoBehaviour
     private static Managers Instance { get { Init(); return s_instance; } }
 
     #region Contents
+    private GameManager _game = new GameManager();
 
+    public static GameManager Game { get { return Instance?._game; } }
     #endregion
 
     #region Core
