@@ -26,7 +26,7 @@ public class Hero : Creature
 
     void Update()
     {
-        // transform.TranslateEx(_moveDir * Time.deltaTime * Speed);
+        transform.TranslateEx(_moveDir * Time.deltaTime * Speed);
     }
 
     private void HandleOnMoveDirChanged(Vector2 dir)
