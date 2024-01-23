@@ -9,7 +9,7 @@ public class ObjectManager
     public HashSet<Hero> Heroes { get; } = new HashSet<Hero>();
     public HashSet<Monster> Monsters { get; } = new HashSet<Monster>();
     public HashSet<Env> Envs { get; } = new HashSet<Env>();
-    // public HeroCamp Camp { get; private set; }
+    public HeroCamp Camp { get; private set; }
 
     #region Roots
     public Transform GetRootTransform(string name)
@@ -84,7 +84,7 @@ public class ObjectManager
         }
         else if (obj.ObjectType == EObjectType.HeroCamp)
         {
-            // Camp = go.GetComponent<HeroCamp>();
+            Camp = go.GetComponent<HeroCamp>();
         }
 
         return obj as T;
@@ -120,7 +120,7 @@ public class ObjectManager
         }
         else if (obj.ObjectType == EObjectType.HeroCamp)
         {
-            // Camp = null;
+            Camp = null;
         }
 
         Managers.Resource.Destroy(obj.gameObject);
