@@ -20,12 +20,14 @@ MonoBehaviour:
   - m_GUID: 6206f946dca62db479498b9a51f9a70a
     m_Address: EnvData
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b9c56a9dd703f264bb4cb8b117600964
     m_Address: CreatureData
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 241a87b227be843459862514a36d7c2d, type: 2}
