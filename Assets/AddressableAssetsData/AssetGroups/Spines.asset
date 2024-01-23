@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: Spines
   m_Data:
     m_SerializedData: []
-  m_GUID: 64732c620fb4bd64586475eab64b9623
+  m_GUID: e14b28135697f7b45bb0ad57eaa87394
   m_SerializeEntries:
   - m_GUID: 1e308705ac9a774499fb319ab993deb4
     m_Address: knight_SkeletonData
@@ -81,5 +81,5 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: 241a87b227be843459862514a36d7c2d, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 899108808547e59428cbcfe72f0e242d, type: 2}
-    - {fileID: 11400000, guid: d0d357ea8838a1e428f019fd60be51f4, type: 2}
+    - {fileID: 11400000, guid: 5cd49ac5520fbf74ab6c4fb3471718a7, type: 2}
+    - {fileID: 11400000, guid: ffbb333afdd952041bb21ed65fa70370, type: 2}

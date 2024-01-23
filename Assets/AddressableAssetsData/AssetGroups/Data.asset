@@ -17,11 +17,15 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 9b64fa3d177df1848a5faba431079f3a
   m_SerializeEntries:
-  - m_GUID: 5d418efd81401c249a291b8bc2c6c6d4
-    m_Address: TestData
+  - m_GUID: 6206f946dca62db479498b9a51f9a70a
+    m_Address: EnvData
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - PreLoad
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b9c56a9dd703f264bb4cb8b117600964
+    m_Address: CreatureData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 241a87b227be843459862514a36d7c2d, type: 2}
