@@ -7,60 +7,68 @@ using static Define;
 
 public class Hero : Creature
 {
-    bool _needArrange = true;
-    public bool NeedArrange
-    {
-        get { return _needArrange; }
-        set
-        {
-            _needArrange = value;
+	bool _needArrange = true;
+	public bool NeedArrange
+	{
+		get { return _needArrange; }
+		set
+		{
+			_needArrange = value;
 
-            if (value)
-                ChangeColliderSize(EColliderSize.Big);
-            else
-                TryResizeCollider();
-        }
-    }
+			if (value)
+				ChangeColliderSize(EColliderSize.Big);
+			else
+				TryResizeCollider();
+		}
+	}
 
-    public override ECreatureState CreatureState
-    {
-        get { return _creatureState; }
-        set
-        {
-            if (_creatureState != value)
-            {
-                base.CreatureState = value;
+	public override ECreatureState CreatureState
+	{
+		get { return _creatureState; }
+		set
+		{
+			if (_creatureState != value)
+			{
+				base.CreatureState = value;
 
-                if (value == ECreatureState.Move)
-                    RigidBody.mass = CreatureData.Mass;
-                else
-                    RigidBody.mass = CreatureData.Mass * 0.1f;
-            }
-        }
-    }
+				switch (value)
+				{
+					case ECreatureState.Move:
+						RigidBody.mass = CreatureData.Mass * 5.0f;
+						break;
+					case ECreatureState.Skill:
+						RigidBody.mass = CreatureData.Mass * 500.0f;
+						break;
+					default:
+						RigidBody.mass = CreatureData.Mass;
+						break;
+				}
+			}
+		}
+	}
 
-    EHeroMoveState _heroMoveState = EHeroMoveState.None;
-    public EHeroMoveState HeroMoveState
-    {
-        get { return _heroMoveState; }
-        private set
-        {
-            _heroMoveState = value;
-            switch (value)
-            {
-                case EHeroMoveState.CollectEnv:
-                    NeedArrange = true;
-                    break;
-                case EHeroMoveState.TargetMonster:
-                    NeedArrange = true;
-                    break;
-                case EHeroMoveState.ForceMove:
-                    NeedArrange = true;
-                    break;
-            }
-        }
-    }
-    
+	EHeroMoveState _heroMoveState = EHeroMoveState.None;
+	public EHeroMoveState HeroMoveState
+	{
+		get { return _heroMoveState; }
+		private set
+		{
+			_heroMoveState = value;
+			switch (value)
+			{
+				case EHeroMoveState.CollectEnv:
+					NeedArrange = true;
+					break;
+				case EHeroMoveState.TargetMonster:
+					NeedArrange = true;
+					break;
+				case EHeroMoveState.ForceMove:
+					NeedArrange = true;
+					break;
+			}
+		}
+	}
+
     public override bool Init()
     {
         if (base.Init() == false)
@@ -97,21 +105,19 @@ public class Hero : Creature
     }
 
     #region AI
-    public float SearchDistance { get; private set; } = 8.0f;
     public float AttackDistance
     {
         get
         {
-            float targetRadius = (_target.IsValid() ? _target.ColliderRadius : 0);
+            float targetRadius = (Target.IsValid() ? Target.ColliderRadius : 0);
             return ColliderRadius + targetRadius + 2.0f;
         }
     }
 
-    public float StopDistance { get; private set; } = 1.0f;
-    BaseObject _target;
-
     protected override void UpdateIdle()
     {
+        SetRigidBodyVelocity(Vector2.zero);
+
         // 0. 이동 상태라면 강제 변경
         if (HeroMoveState == EHeroMoveState.ForceMove)
         {
@@ -123,20 +129,20 @@ public class Hero : Creature
 
 
         // 1. 몬스터
-        Creature creature = FindClosestInRange(SearchDistance, Managers.Object.Monsters) as Creature;
+        Creature creature = FindClosestInRange(HERO_SEARCH_DISTANCE, Managers.Object.Monsters) as Creature;
         if (creature != null)
         {
-            _target = creature;
+            Target = creature;
             CreatureState = ECreatureState.Move;
             HeroMoveState = EHeroMoveState.TargetMonster;
             return;
         }
 
         // 2. 주변 Env 채굴
-        Env env = FindClosestInRange(SearchDistance, Managers.Object.Envs) as Env;
+        Env env = FindClosestInRange(HERO_SEARCH_DISTANCE, Managers.Object.Envs) as Env;
         if (env != null)
         {
-            _target = env;
+            Target = env;
             CreatureState = ECreatureState.Move;
             HeroMoveState = EHeroMoveState.CollectEnv;
             return;
@@ -165,14 +171,14 @@ public class Hero : Creature
         if (HeroMoveState == EHeroMoveState.TargetMonster)
         {
             // 몬스터 죽었으면 포기.
-            if (_target.IsValid() == false)
+            if (Target.IsValid() == false)
             {
                 HeroMoveState = EHeroMoveState.None;
                 CreatureState = ECreatureState.Move;
                 return;
             }
 
-            ChaseOrAttackTarget(AttackDistance, SearchDistance);
+            ChaseOrAttackTarget(AttackDistance, MONSTER_SEARCH_DISTANCE);
             return;
         }
 
@@ -180,24 +186,24 @@ public class Hero : Creature
         if (HeroMoveState == EHeroMoveState.CollectEnv)
         {
             // 몬스터가 있으면 포기.
-            Creature creature = FindClosestInRange(SearchDistance, Managers.Object.Monsters) as Creature;
+            Creature creature = FindClosestInRange(MONSTER_SEARCH_DISTANCE, Managers.Object.Monsters) as Creature;
             if (creature != null)
             {
-                _target = creature;
+                Target = creature;
                 HeroMoveState = EHeroMoveState.TargetMonster;
                 CreatureState = ECreatureState.Move;
                 return;
             }
 
             // Env 이미 채집했으면 포기.
-            if (_target.IsValid() == false)
+            if (Target.IsValid() == false)
             {
                 HeroMoveState = EHeroMoveState.None;
                 CreatureState = ECreatureState.Move;
                 return;
             }
 
-            ChaseOrAttackTarget(AttackDistance, SearchDistance);
+            ChaseOrAttackTarget(AttackDistance, HERO_SEARCH_DISTANCE);
             return;
         }
 
@@ -205,8 +211,8 @@ public class Hero : Creature
         if (HeroMoveState == EHeroMoveState.ReturnToCamp)
         {
             Vector3 dir = HeroCampDest.position - transform.position;
-            float stopDistanceSqr = StopDistance * StopDistance;
-            if (dir.sqrMagnitude <= stopDistanceSqr)
+            float stopDistanceSqr = HERO_DEFAULT_STOP_RANGE * HERO_DEFAULT_STOP_RANGE;
+            if (dir.sqrMagnitude <= HERO_DEFAULT_STOP_RANGE)
             {
                 HeroMoveState = EHeroMoveState.None;
                 CreatureState = ECreatureState.Idle;
@@ -229,13 +235,15 @@ public class Hero : Creature
 
     protected override void UpdateSkill()
     {
+        SetRigidBodyVelocity(Vector2.zero);
+
         if (HeroMoveState == EHeroMoveState.ForceMove)
         {
             CreatureState = ECreatureState.Move;
             return;
         }
 
-        if (_target.IsValid() == false)
+        if (Target.IsValid() == false)
         {
             CreatureState = ECreatureState.Move;
             return;
@@ -244,62 +252,7 @@ public class Hero : Creature
 
     protected override void UpdateDead()
     {
-
-    }
-
-    BaseObject FindClosestInRange(float range, IEnumerable<BaseObject> objs)
-    {
-        BaseObject target = null;
-        float bestDistanceSqr = float.MaxValue;
-        float searchDistanceSqr = range * range;
-
-        foreach (BaseObject obj in objs)
-        {
-            Vector3 dir = obj.transform.position - transform.position;
-            float distToTargetSqr = dir.sqrMagnitude;
-
-            // 서치 범위보다 멀리 있으면 스킵.
-            if (distToTargetSqr > searchDistanceSqr)
-                continue;
-
-            // 이미 더 좋은 후보를 찾았으면 스킵.
-            if (distToTargetSqr > bestDistanceSqr)
-                continue;
-
-            target = obj;
-            bestDistanceSqr = distToTargetSqr;
-        }
-
-        return target;
-    }
-
-    void ChaseOrAttackTarget(float attackRange, float chaseRange)
-    {
-        Vector3 dir = (_target.transform.position - transform.position);
-        float distToTargetSqr = dir.sqrMagnitude;
-        float attackDistanceSqr = attackRange * attackRange;
-
-        if (distToTargetSqr <= attackDistanceSqr)
-        {
-            // 공격 범위 이내로 들어왔다면 공격.
-            CreatureState = ECreatureState.Skill;
-            return;
-        }
-        else
-        {
-            // 공격 범위 밖이라면 추적.
-            SetRigidBodyVelocity(dir.normalized * MoveSpeed);
-
-            // 너무 멀어지면 포기.
-            float searchDistanceSqr = chaseRange * chaseRange;
-            if (distToTargetSqr > searchDistanceSqr)
-            {
-                _target = null;
-                HeroMoveState = EHeroMoveState.None;
-                CreatureState = ECreatureState.Move;
-            }
-            return;
-        }
+        SetRigidBodyVelocity(Vector2.zero);
     }
     #endregion
 
@@ -349,9 +302,9 @@ public class Hero : Creature
         CreatureState = ECreatureState.Move;
 
         // Skill
-        if (_target.IsValid() == false)
+        if (Target.IsValid() == false)
             return;
 
-        _target.OnDamaged(this);
+        Target.OnDamaged(this);
     }
 }
