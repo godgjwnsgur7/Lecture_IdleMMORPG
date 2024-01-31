@@ -43,13 +43,12 @@ public class BaseObject : InitBase
         return true;
     }
 
-    public void TranslateEx(Vector3 dir)
+    public void LookAtTarget(BaseObject target)
     {
-        transform.Translate(dir);
-
+        Vector2 dir = target.transform.position - transform.position;
         if (dir.x < 0)
             LookLeft = true;
-        else if (dir.x > 0)
+        else
             LookLeft = false;
     }
 

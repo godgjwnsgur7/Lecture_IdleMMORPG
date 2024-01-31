@@ -9,6 +9,8 @@ using static Define;
 public class Creature : BaseObject
 {
     public BaseObject Target { get; protected set; }
+    public SkillComponent Skills { get; protected set; }
+
     public Data.CreatureData CreatureData { get; private set; }
     public ECreatureType CreatureType { get; protected set; } = ECreatureType.None;
 
