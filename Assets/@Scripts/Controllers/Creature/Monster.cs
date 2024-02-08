@@ -107,8 +107,8 @@ public class Monster : Creature
         {
             // Chase
             SkillBase skill = Skills.GetReadySkill();
-            // ChaseOrAttackTarget(MONSTER_SEARCH_DISTANCE, skill);
-            ChaseOrAttackTarget(MONSTER_SEARCH_DISTANCE, 5.0f);
+            ChaseOrAttackTarget(MONSTER_SEARCH_DISTANCE, skill);
+            //ChaseOrAttackTarget(MONSTER_SEARCH_DISTANCE, 5.0f);
 
             // 너무 멀어지면 포기.
             if (Target.IsValid() == false)
@@ -138,14 +138,14 @@ public class Monster : Creature
     #endregion
 
     #region Battle
-    public override void OnDamaged(BaseObject attacker)
+    public override void OnDamaged(BaseObject attacker, SkillBase skill)
     {
-        base.OnDamaged(attacker);
+        base.OnDamaged(attacker, skill);
     }
 
-    public override void OnDead(BaseObject attacker)
+    public override void OnDead(BaseObject attacker, SkillBase skill)
     {
-        base.OnDead(attacker);
+        base.OnDead(attacker, skill);
 
         // TODO : Drop Item
 
