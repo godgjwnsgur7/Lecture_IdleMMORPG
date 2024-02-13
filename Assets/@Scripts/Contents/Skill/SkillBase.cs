@@ -55,7 +55,7 @@ public abstract class SkillBase : InitBase
 
     protected virtual void GenerateProjectile(Creature owner, Vector3 spawnPos)
     {
-        // Projectile projectile = Managers.Object.Spawn<Projectile>(spawnPos, SkillData.ProjectileId);
+        Projectile projectile = Managers.Object.Spawn<Projectile>(spawnPos, SkillData.ProjectileId);
 
         LayerMask excludeMask = 0;
         excludeMask.AddLayer(Define.ELayer.Default);
@@ -73,7 +73,7 @@ public abstract class SkillBase : InitBase
                 break;
         }
 
-        // projectile.SetSpawnInfo(Owner, this, excludeMask);
+        projectile.SetSpawnInfo(Owner, this, excludeMask);
     }
 
     protected abstract void OnAnimEventHandler(TrackEntry trackEntry, Event e);
