@@ -8,7 +8,7 @@ public class Projectile : BaseObject
     public Creature Owner { get; private set; }
     public SkillBase Skill { get; private set; }
     public Data.ProjectileData ProjectileData { get; private set; }
-    // public ProjectileMotionBase ProjectileMotion { get; private set; }
+    public ProjectileMotionBase ProjectileMotion { get; private set; }
 
     private SpriteRenderer _spriteRenderer;
 
@@ -44,7 +44,6 @@ public class Projectile : BaseObject
         // Rule
         Collider.excludeLayers = layer;
 
-        /*
         if (ProjectileMotion != null)
             Destroy(ProjectileMotion);
 
@@ -58,8 +57,7 @@ public class Projectile : BaseObject
         ParabolaMotion parabolaMotion = ProjectileMotion as ParabolaMotion;
         if (parabolaMotion != null)
             parabolaMotion.SetInfo(ProjectileData.DataId, owner.CenterPosition, owner.Target.CenterPosition, () => { Managers.Object.Despawn(this); });
-        */
-
+        
         StartCoroutine(CoReserveDestroy(5.0f));
     }
 
