@@ -47,6 +47,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c3ff37e0df4ce14488999c571c273eb2
+    m_Address: Tilemap_CollisionCollision
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 241a87b227be843459862514a36d7c2d, type: 2}
   m_SchemaSet:

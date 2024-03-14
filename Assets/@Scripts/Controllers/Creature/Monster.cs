@@ -91,24 +91,30 @@ public class Monster : Creature
 
     protected override void UpdateMove()
     {
-        if (Target == null)
+        if (Target.IsValid() == false)
         {
-            // Patrol or Return
-            Vector3 dir = (_destPos - transform.position);
-            if (dir.sqrMagnitude <= 0.01f)
+            Creature creature = FindClosestInRange(MONSTER_SEARCH_DISTANCE, Managers.Object.Heroes, func: IsValid) as Creature;
+            if (creature != null)
+            {
+                Target = creature;
+                CreatureState = ECreatureState.Move;
+                return;
+            }
+
+            // Move
+            FindPathAndMoveToCellPos(_destPos, MONSTER_DEFAULT_MOVE_DEPTH);
+
+            if (LerpCellPosCompleted)
             {
                 CreatureState = ECreatureState.Idle;
                 return;
             }
-
-            SetRigidBodyVelocity(dir.normalized * MoveSpeed);
         }
         else
         {
             // Chase
             SkillBase skill = Skills.GetReadySkill();
             ChaseOrAttackTarget(MONSTER_SEARCH_DISTANCE, skill);
-            //ChaseOrAttackTarget(MONSTER_SEARCH_DISTANCE, 5.0f);
 
             // 너무 멀어지면 포기.
             if (Target.IsValid() == false)
@@ -133,7 +139,7 @@ public class Monster : Creature
 
     protected override void UpdateDead()
     {
-        SetRigidBodyVelocity(Vector2.zero);
+
     }
     #endregion
 
@@ -153,4 +159,3 @@ public class Monster : Creature
     }
     #endregion
 }
-
