@@ -2,11 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TitleScene : MonoBehaviour
+public class TitleScene : BaseScene
 {
-    private void Start()
+    public override bool Init()
     {
-        StartLoadAssets();
+        if (base.Init() == false)
+            return false;
+
+        SceneType = Define.EScene.TitleScene;
+
+        //StartLoadAssets();
+
+        return true;
     }
 
     void StartLoadAssets()
@@ -20,5 +27,10 @@ public class TitleScene : MonoBehaviour
                 //Managers.Data.Init();
             }
         });
+    }
+
+    public override void Clear()
+    {
+
     }
 }
